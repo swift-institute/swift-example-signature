@@ -27,7 +27,11 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-foundations/swift-client-macros.git",
+            url: "https://github.com/swift-foundations/swift-algebra-derivation.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-foundations/swift-call-derivation.git",
             branch: "main"
         ),
         .package(
@@ -46,7 +50,8 @@ let package = Package(
                 .product(name: "Example", package: "swift-example"),
                 .product(name: "Example Greeting", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
-                .product(name: "Client Macros", package: "swift-client-macros"),
+                .product(name: "Algebra Derivation", package: "swift-algebra-derivation"),
+                .product(name: "Call Derivation", package: "swift-call-derivation"),
             ]
         ),
         .target(
@@ -55,7 +60,8 @@ let package = Package(
                 .product(name: "Example", package: "swift-example"),
                 .product(name: "Example Counter", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
-                .product(name: "Client Macros", package: "swift-client-macros"),
+                .product(name: "Algebra Derivation", package: "swift-algebra-derivation"),
+                .product(name: "Call Derivation", package: "swift-call-derivation"),
             ]
         ),
         .target(
