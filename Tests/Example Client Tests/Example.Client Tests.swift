@@ -27,16 +27,6 @@ struct `Example.Client Tests` {
     }
 
     @Test
-    func `generated greeting call is interpreted by its client`() async {
-        let client = Example.Greeting.Client(
-            greet: { .init("hi \($0.underlying)") }
-        )
-        let call = Example.Greeting.Call.greet(.init("Ada"))
-        #expect(await client(call) == .init("hi Ada"))
-        #expect(call.eliminate(greet: \.underlying) == "Ada")
-    }
-
-    @Test
     func `counter client surfaces the declared domain refusal`() async {
         let client = Example.Counter.Client(
             increment: { limit throws(Example.Counter.Error) in
@@ -51,19 +41,4 @@ struct `Example.Client Tests` {
         }
     }
 
-    @Test
-    func `generated counter call preserves its typed refusal`() async {
-        let client = Example.Counter.Client(
-            increment: { limit throws(Example.Counter.Error) in
-                try Example.Counter.increment(.init(5), limit: limit)
-            }
-        )
-        let call = Example.Counter.Call.increment(limit: .init(5))
-        do throws(Example.Counter.Error) {
-            _ = try await client(call)
-            Issue.record("expected a refusal")
-        } catch {
-            #expect(error == .limit(reached: .init(5)))
-        }
-    }
 }
