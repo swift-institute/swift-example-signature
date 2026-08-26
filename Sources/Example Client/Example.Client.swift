@@ -8,9 +8,9 @@ extension Example {
 
     public struct Client {
 
-        public var greeting: Example.Greeting.Client
+        public let greeting: Example.Greeting.Client
 
-        public var counter: Example.Counter.Client
+        public let counter: Example.Counter.Client
 
         public init(
             greeting: Example.Greeting.Client,

@@ -81,6 +81,8 @@ let package = Package(
                 .product(name: "Example Greeting", package: "swift-example"),
                 .product(name: "Example Counter", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
+                .product(name: "Algebra Derivation", package: "swift-algebra-derivation"),
+                .product(name: "Call Derivation", package: "swift-call-derivation"),
                 "Example Greeting Client",
                 "Example Counter Client",
                 "Example Client",
