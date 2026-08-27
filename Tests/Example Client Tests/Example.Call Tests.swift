@@ -17,24 +17,23 @@ struct `Example.Call Tests` {
     }
 
     @Test
-    func `a leaf eliminator reaches its own branch`() {
+    func `a leaf eliminator reaches its own branch`() async throws {
         let greeting = Example.Greeting.Call.greet(.init("Ada"))
 
-        #expect(greeting.eliminate(greet: { $0.underlying }) == "Ada")
+        #expect(
+            try await greeting.eliminate(greet: { $0.underlying })
+                == "Ada"
+        )
     }
 
     @Test
-    func `the derived metadata carries total operation results`() {
-        let _: Example.Greeting.Call.Failure.Type = Swift.Never.self
-        let _: Example.Counter.Call.Failure.Type = Swift.Never.self
-        let output: Example.Counter.Call.Result = .increment(.success(.init(3)))
-
-        let value: Example.Counter.Value? = if case .increment(.success(let value)) = output {
-            value
-        } else {
-            nil
-        }
-        #expect(value == Example.Counter.Value(3))
+    func `a leaf call carries its operation signature`() {
+        let _: Example.Greeting.Call.Operation.Input.Type = Example.Greeting.Name.self
+        let _: Example.Greeting.Call.Operation.Output.Type = Example.Greeting.Message.self
+        let _: Example.Greeting.Call.Operation.Failure.Type = Swift.Never.self
+        let _: Example.Counter.Call.Operation.Input.Type = Example.Counter.Limit.self
+        let _: Example.Counter.Call.Operation.Output.Type = Example.Counter.Value.self
+        let _: Example.Counter.Call.Operation.Failure.Type = Example.Counter.Error.self
     }
 
     @Test
@@ -49,19 +48,20 @@ struct `Example.Call Tests` {
     }
 
     @Test
-    func `the root eliminator is exhaustive over both subdomains`() {
-        let calls: [Example.Call] = [
-            .greeting(.greet(.init("Ada"))),
-            .counter(.increment(limit: .init(2))),
-        ]
-
-        let named = calls.map { call in
-            call.eliminate(
+    func `the root eliminator is exhaustive over both subdomains`() async throws {
+        let greeting = try await Example.Call.greeting(
+            .greet(.init("Ada"))
+        ).eliminate(
+            greeting: { _ in "greeting" },
+            counter: { _ in "counter" }
+        )
+        let counter = try await Example.Call.counter(
+            .increment(limit: .init(2))
+        ).eliminate(
                 greeting: { _ in "greeting" },
                 counter: { _ in "counter" }
-            )
-        }
+        )
 
-        #expect(named == ["greeting", "counter"])
+        #expect([greeting, counter] == ["greeting", "counter"])
     }
 }
