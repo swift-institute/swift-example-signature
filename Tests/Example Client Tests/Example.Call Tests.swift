@@ -24,12 +24,17 @@ struct `Example.Call Tests` {
     }
 
     @Test
-    func `the derived metadata names each operation's output and refusal`() {
+    func `the derived metadata carries total operation results`() {
         let _: Example.Greeting.Call.Failure.Type = Swift.Never.self
-        let _: Example.Counter.Call.Failure.Type = Example.Counter.Error.self
-        let output: Example.Counter.Call.Output = .init(3)
+        let _: Example.Counter.Call.Failure.Type = Swift.Never.self
+        let output: Example.Counter.Call.Result = .increment(.success(.init(3)))
 
-        #expect(output == Example.Counter.Value(3))
+        let value: Example.Counter.Value? = if case .increment(.success(let value)) = output {
+            value
+        } else {
+            nil
+        }
+        #expect(value == Example.Counter.Value(3))
     }
 
     @Test

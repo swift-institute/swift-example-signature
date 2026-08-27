@@ -27,7 +27,7 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-foundations/swift-algebra-derivation.git",
+            url: "https://github.com/swift-foundations/swift-client-derivation.git",
             branch: "main"
         ),
         .package(
@@ -50,7 +50,7 @@ let package = Package(
                 .product(name: "Example", package: "swift-example"),
                 .product(name: "Example Greeting", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
-                .product(name: "Algebra Derivation", package: "swift-algebra-derivation"),
+                .product(name: "Client Derivation", package: "swift-client-derivation"),
                 .product(name: "Call Derivation", package: "swift-call-derivation"),
             ]
         ),
@@ -60,7 +60,7 @@ let package = Package(
                 .product(name: "Example", package: "swift-example"),
                 .product(name: "Example Counter", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
-                .product(name: "Algebra Derivation", package: "swift-algebra-derivation"),
+                .product(name: "Client Derivation", package: "swift-client-derivation"),
                 .product(name: "Call Derivation", package: "swift-call-derivation"),
             ]
         ),
@@ -71,7 +71,7 @@ let package = Package(
                 .product(name: "Example Greeting", package: "swift-example"),
                 .product(name: "Example Counter", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
-                .product(name: "Algebra Derivation", package: "swift-algebra-derivation"),
+                .product(name: "Client Derivation", package: "swift-client-derivation"),
                 .product(name: "Call Derivation", package: "swift-call-derivation"),
                 "Example Greeting Client",
                 "Example Counter Client",
@@ -84,7 +84,7 @@ let package = Package(
                 .product(name: "Example Greeting", package: "swift-example"),
                 .product(name: "Example Counter", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
-                .product(name: "Algebra Derivation", package: "swift-algebra-derivation"),
+                .product(name: "Client Derivation", package: "swift-client-derivation"),
                 .product(name: "Call Derivation", package: "swift-call-derivation"),
                 "Example Greeting Client",
                 "Example Counter Client",
