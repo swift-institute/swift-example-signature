@@ -27,15 +27,15 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-foundations/swift-client-derivation.git",
+            url: "https://github.com/swift-compositions/swift-client-derivation.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-foundations/swift-call-derivation.git",
+            url: "https://github.com/swift-compositions/swift-call-derivation.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-foundations/swift-client.git",
+            url: "https://github.com/swift-compositions/swift-client.git",
             branch: "main"
         ),
         .package(
