@@ -54,13 +54,13 @@ struct `Example.Call Tests` {
 
     @Test
     func `the root eliminator is exhaustive over both subdomains`() async throws {
-        let greeting = try await Example.Call.greeting(
+        let greeting = await Example.Call.greeting(
             .greet(.init("Ada"))
         ).eliminate(
             greeting: { _ in "greeting" },
             counter: { _ in "counter" }
         )
-        let counter = try await Example.Call.counter(
+        let counter = await Example.Call.counter(
             .increment(limit: .init(2))
         ).eliminate(
                 greeting: { _ in "greeting" },
