@@ -1,5 +1,6 @@
 import Example
 import Example_Client
+import Optic
 import Example_Counter
 import Example_Counter_Client
 import Example_Greeting
