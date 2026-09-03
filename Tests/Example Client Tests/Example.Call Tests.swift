@@ -13,13 +13,13 @@ import Testing
 struct `Example.Call Tests` {
 
     @Test
-    func `a leaf call round trips through its derived prism`() {
+    func `a leaf call is read through its derived fold`() {
         let call = Example.Counter.Call.increment(limit: .init(7))
 
-        let increment = Example.Counter.Call.prisms.increment.match(call)
-        #expect(increment.right?.input == .init(7))
-        let greet = Example.Greeting.Call.prisms.greet.match(.greet(.init("Ada")))
-        #expect(greet.right?.input == .init("Ada"))
+        let increment = Example.Counter.Call.folds.increment.extract(call)
+        #expect(increment?.input == .init(7))
+        let greet = Example.Greeting.Call.folds.greet.extract(.greet(.init("Ada")))
+        #expect(greet?.input == .init("Ada"))
     }
 
     @Test
@@ -42,11 +42,11 @@ struct `Example.Call Tests` {
     }
 
     @Test
-    func `the root call embeds each leaf and matches only its own case`() {
-        let counterIsCounter = Example.Call.prisms.counter.matches(.counter(.increment(limit: .init(3))))
-        let counterIsGreeting = Example.Call.prisms.greeting.matches(.counter(.increment(limit: .init(3))))
-        let greetingIsGreeting = Example.Call.prisms.greeting.matches(.greeting(.greet(.init("Ada"))))
-        let greetingIsCounter = Example.Call.prisms.counter.matches(.greeting(.greet(.init("Ada"))))
+    func `the root call matches only its own case`() {
+        let counterIsCounter = Example.Call.cases.counter.matches(.counter(.increment(limit: .init(3))))
+        let counterIsGreeting = Example.Call.cases.greeting.matches(.counter(.increment(limit: .init(3))))
+        let greetingIsGreeting = Example.Call.cases.greeting.matches(.greeting(.greet(.init("Ada"))))
+        let greetingIsCounter = Example.Call.cases.counter.matches(.greeting(.greet(.init("Ada"))))
 
         #expect(counterIsCounter)
         #expect(!counterIsGreeting)
