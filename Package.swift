@@ -31,7 +31,15 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-compositions/swift-call-derivation.git",
+            url: "https://github.com/swift-compositions/swift-signature-derivation.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-either.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-optic.git",
             branch: "main"
         ),
         .package(
@@ -51,7 +59,7 @@ let package = Package(
                 .product(name: "Example Greeting", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
                 .product(name: "Client Derivation", package: "swift-client-derivation"),
-                .product(name: "Call Derivation", package: "swift-call-derivation"),
+                .product(name: "Signature Derivation", package: "swift-signature-derivation"),
             ]
         ),
         .target(
@@ -61,7 +69,7 @@ let package = Package(
                 .product(name: "Example Counter", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
                 .product(name: "Client Derivation", package: "swift-client-derivation"),
-                .product(name: "Call Derivation", package: "swift-call-derivation"),
+                .product(name: "Signature Derivation", package: "swift-signature-derivation"),
             ]
         ),
         .target(
@@ -72,7 +80,7 @@ let package = Package(
                 .product(name: "Example Counter", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
                 .product(name: "Client Derivation", package: "swift-client-derivation"),
-                .product(name: "Call Derivation", package: "swift-call-derivation"),
+                .product(name: "Signature Derivation", package: "swift-signature-derivation"),
                 "Example Greeting Client",
                 "Example Counter Client",
             ]
@@ -85,7 +93,9 @@ let package = Package(
                 .product(name: "Example Counter", package: "swift-example"),
                 .product(name: "Client", package: "swift-client"),
                 .product(name: "Client Derivation", package: "swift-client-derivation"),
-                .product(name: "Call Derivation", package: "swift-call-derivation"),
+                .product(name: "Signature Derivation", package: "swift-signature-derivation"),
+                .product(name: "Either", package: "swift-either"),
+                .product(name: "Optic", package: "swift-optic"),
                 "Example Greeting Client",
                 "Example Counter Client",
                 "Example Client",

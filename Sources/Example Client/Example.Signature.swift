@@ -1,17 +1,19 @@
 public import Client_Derivation
-public import Call_Derivation
-public import Client
 public import Example
 public import Example_Counter
 public import Example_Counter_Client
 public import Example_Greeting
 public import Example_Greeting_Client
+public import Signature_Derivation
 
 extension Example {
+    @Signature
     @Client
-    @Calls
-    package protocol Signature {
-        var greeting: Greeting.Client { get }
-        var counter: Counter.Client { get }
+    package protocol `Protocol` {
+        associatedtype Greeting: Example::Example.Greeting.`Protocol`
+        associatedtype Counter: Example::Example.Counter.`Protocol`
+
+        var greeting: Greeting { get }
+        var counter: Counter { get }
     }
 }

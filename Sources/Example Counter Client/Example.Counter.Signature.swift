@@ -1,13 +1,12 @@
 public import Client_Derivation
-public import Call_Derivation
-public import Client
 public import Example
 public import Example_Counter
+public import Signature_Derivation
 
 extension Example.Counter {
+    @Signature
     @Client
-    @Calls
-    package protocol Signature {
+    package protocol `Protocol` {
         func increment(limit: Limit) async throws(Error) -> Value
     }
 }

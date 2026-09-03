@@ -1,13 +1,12 @@
 public import Client_Derivation
-public import Call_Derivation
-public import Client
 public import Example
 public import Example_Greeting
+public import Signature_Derivation
 
 extension Example.Greeting {
+    @Signature
     @Client
-    @Calls
-    package protocol Signature {
+    package protocol `Protocol` {
         func greet(_ name: Name) async -> Message
     }
 }
