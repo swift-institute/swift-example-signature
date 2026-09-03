@@ -4,7 +4,9 @@ import Example_Counter
 import Example_Counter_Client
 import Example_Greeting
 import Example_Greeting_Client
+import Operation
 import Optic
+import Either
 import Testing
 
 @Suite
@@ -14,18 +16,10 @@ struct `Example.Call Tests` {
     func `a leaf call round trips through its derived prism`() {
         let call = Example.Counter.Call.increment(limit: .init(7))
 
-        switch Example.Counter.Call.prisms.increment.match(call) {
-        case .right(let application):
-            #expect(application.input == .init(7))
-        case .left:
-            Issue.record("expected the increment prism to match")
-        }
-        switch Example.Greeting.Call.prisms.greet.match(.greet(.init("Ada"))) {
-        case .right(let application):
-            #expect(application.input == .init("Ada"))
-        case .left:
-            Issue.record("expected the greet prism to match")
-        }
+        let increment = Example.Counter.Call.prisms.increment.match(call)
+        #expect(increment.right?.input == .init(7))
+        let greet = Example.Greeting.Call.prisms.greet.match(.greet(.init("Ada")))
+        #expect(greet.right?.input == .init("Ada"))
     }
 
     @Test
@@ -49,13 +43,15 @@ struct `Example.Call Tests` {
 
     @Test
     func `the root call embeds each leaf and matches only its own case`() {
-        let counter = Example.Call.counter(.increment(limit: .init(3)))
-        let greeting = Example.Call.greeting(.greet(.init("Ada")))
+        let counterIsCounter = Example.Call.prisms.counter.matches(.counter(.increment(limit: .init(3))))
+        let counterIsGreeting = Example.Call.prisms.greeting.matches(.counter(.increment(limit: .init(3))))
+        let greetingIsGreeting = Example.Call.prisms.greeting.matches(.greeting(.greet(.init("Ada"))))
+        let greetingIsCounter = Example.Call.prisms.counter.matches(.greeting(.greet(.init("Ada"))))
 
-        #expect(Example.Call.prisms.counter.matches(counter))
-        #expect(!Example.Call.prisms.greeting.matches(counter))
-        #expect(Example.Call.prisms.greeting.matches(greeting))
-        #expect(!Example.Call.prisms.counter.matches(greeting))
+        #expect(counterIsCounter)
+        #expect(!counterIsGreeting)
+        #expect(greetingIsGreeting)
+        #expect(!greetingIsCounter)
     }
 
     @Test
@@ -64,8 +60,10 @@ struct `Example.Call Tests` {
             greeting: { _ in "greeting" },
             counter: { _ in "counter" }
         )
+        let greeting = eliminate(.greeting(.greet(.init("Ada"))))
+        let counter = eliminate(.counter(.increment(limit: .init(2))))
 
-        #expect(eliminate(.greeting(.greet(.init("Ada")))) == "greeting")
-        #expect(eliminate(.counter(.increment(limit: .init(2)))) == "counter")
+        #expect(greeting == "greeting")
+        #expect(counter == "counter")
     }
 }

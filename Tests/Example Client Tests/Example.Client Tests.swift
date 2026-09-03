@@ -48,7 +48,7 @@ struct `Example.Client Tests` {
     }
 
     @Test
-    func `the derived client lifts every failure into the external coproduct`() async {
+    func `the derived client lifts every failure into the external coproduct`() async throws {
         let client = Example.Client<Transport>(
             greeting: .init(greet: .init { name throws(Either<Transport, Never>) in .init("hi \(name.underlying)") }),
             counter: .init(increment: .init { _ throws(Either<Transport, Example.Counter.Error>) in throw .left(.unreachable) })

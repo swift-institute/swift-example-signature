@@ -9,7 +9,7 @@ public import Signature_Derivation
 extension Example {
     @Signature
     @Client
-    package protocol `Protocol` {
+    public protocol `Protocol` {
         associatedtype Greeting: Example::Example.Greeting.`Protocol`
         associatedtype Counter: Example::Example.Counter.`Protocol`
 

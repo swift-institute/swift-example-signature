@@ -6,7 +6,7 @@ public import Signature_Derivation
 extension Example.Counter {
     @Signature
     @Client
-    package protocol `Protocol` {
+    public protocol `Protocol` {
         func increment(limit: Limit) async throws(Error) -> Value
     }
 }

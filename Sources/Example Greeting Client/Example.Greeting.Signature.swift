@@ -6,7 +6,7 @@ public import Signature_Derivation
 extension Example.Greeting {
     @Signature
     @Client
-    package protocol `Protocol` {
+    public protocol `Protocol` {
         func greet(_ name: Name) async -> Message
     }
 }
