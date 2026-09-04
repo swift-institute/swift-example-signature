@@ -16,10 +16,10 @@ private enum Transport: Swift.Error, Equatable {
 struct `Example.Client Tests` {
 
     @Test
-    func `the root product composes both subproducts`() async throws {
+    func `an implementation of the signature is the local client`() async throws {
         var current = Example.Counter.Value(0)
-        let client = Example.Product(
-            greeting: Example.Greeting.Product(greet: { name in .init("hi \(name.underlying)") }),
+        let example = Example.Product(
+            greeting: Example.Greeting.Product(greet: Example.Greeting.greet),
             counter: Example.Counter.Product(
                 increment: { limit throws(Example.Counter.Error) in
                     current = try Example.Counter.increment(current, limit: limit)
@@ -27,20 +27,22 @@ struct `Example.Client Tests` {
                 }
             )
         )
-        #expect(await client.greeting.greet(.init("x")) == .init("hi x"))
-        #expect(try await client.counter.increment(limit: .init(9)) == .init(1))
-        #expect(try await client.counter.increment(limit: .init(9)) == .init(2))
+
+        #expect(await example.greeting.greet(.init("Ada")) == .init("Hello, Ada!"))
+        #expect(try await example.counter.increment(limit: .init(9)) == .init(1))
+        #expect(try await example.counter.increment(limit: .init(9)) == .init(2))
     }
 
     @Test
-    func `the counter product surfaces the declared domain refusal`() async {
-        let client = Example.Counter.Product(
+    func `a refusal is the domain's own error`() async {
+        let counter = Example.Counter.Product(
             increment: { limit throws(Example.Counter.Error) in
                 try Example.Counter.increment(.init(5), limit: limit)
             }
         )
+
         do throws(Example.Counter.Error) {
-            _ = try await client.increment(limit: .init(5))
+            _ = try await counter.increment(limit: .init(5))
             Issue.record("expected a refusal")
         } catch {
             #expect(error == .limit(reached: .init(5)))
@@ -48,11 +50,12 @@ struct `Example.Client Tests` {
     }
 
     @Test
-    func `the derived client lifts every failure into the external coproduct`() async throws {
+    func `a client over a transport keeps its failure apart from the refusal`() async throws {
         let client = Example.Client<Transport>(
             greeting: .init(greet: .init { name throws(Either<Transport, Never>) in .init("hi \(name.underlying)") }),
             counter: .init(increment: .init { _ throws(Either<Transport, Example.Counter.Error>) in throw .left(.unreachable) })
         )
+
         #expect(try await client.greeting.greet(.init("x")) == .init("hi x"))
         await #expect(throws: Either<Transport, Example.Counter.Error>.left(.unreachable)) {
             try await client.counter.increment(limit: .init(1))
