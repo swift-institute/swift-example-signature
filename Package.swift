@@ -101,6 +101,7 @@ let package = Package(
                 .product(name: "Either", package: "swift-either"),
                 .product(name: "Optic", package: "swift-optic"),
                 .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Tagged Standard Library Integration", package: "swift-tagged"),
                 "Example Greeting Signature",
                 "Example Counter Signature",
                 "Example Signature",
