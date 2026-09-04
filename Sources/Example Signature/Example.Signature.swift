@@ -1,9 +1,9 @@
 public import Client_Derivation
 public import Example
 public import Example_Counter
-public import Example_Counter_Client
+public import Example_Counter_Signature
 public import Example_Greeting
-public import Example_Greeting_Client
+public import Example_Greeting_Signature
 public import Signature_Derivation
 
 extension Example {

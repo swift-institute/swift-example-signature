@@ -1,10 +1,11 @@
 import Example
-import Example_Client
+import Example_Signature
 import Example_Counter
-import Example_Counter_Client
+import Example_Counter_Signature
 import Example_Greeting
-import Example_Greeting_Client
+import Example_Greeting_Signature
 import Operation
+import Tagged
 import Testing
 
 @Suite
